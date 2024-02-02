@@ -1,24 +1,76 @@
 #!/bin/bash
 
-# Voting opens 10 seconds from now
-cli/invoke_wallet1.sh UpdateVotingStart 0 0 2 $(($(date +%s) + 10))
-sleep 1
-# Voting ends 3600 seconds from now , eg 60 minutes
-cli/invoke_wallet1.sh UpdateVotingEnd 0 0 2 $(($(date +%s) + 3600))
-sleep 1
-# Every vote (token) costs 100 deri to place
-cli/invoke_wallet1.sh UpdateVotingFee 0 0 2 100
-sleep 1
-# Publish voter's account addresses, vote count, answer and voting timestamp
-cli/invoke_wallet1.sh UpdateDisplayVoters 0 0 2 1
-sleep 1
-# Deny all anonymous votes
-cli/invoke_wallet1.sh UpdateRejectAnonymousVote 0 0 2 0
-sleep 1
-# Mint maximum amount of ballots (tokens)
-cli/invoke_wallet1.sh UpdateVotesMax 0 0 2 25
-sleep 1
-# Vote with 100 DERI , 1 token, 2 rings, and yes=1
-cli/invoke_wallet1.sh Vote 100 1 2 1
-# TallyVote 0 deri 0 token 2 rings
-# cli/invoke_wallet1.sh TallyVotes 0 0 2
+# Default parameters
+DEFAULT_RINGSIZE=2
+DEFAULT_DERI_AMOUNT=0
+DEFAULT_TOKEN_AMOUNT=0
+DEFAULT_TRUE_AMOUNT=1
+DEFAULT_FALSE_AMOUNT=0
+VOTE_TOKEN_MAX=25
+VOTE_DERI_COST=500000
+VOTE_START=$(($(date +%s) + 10))
+VOTE_END=$(($(date +%s) + 360))
+VOTE_TOKEN_ONE=1
+VOTE_NO=0 
+VOTE_YES=1
+VOTE_ABSTAIN=2 # VOTING NOT TO VOTE 
+
+# Function to invoke the wallet script with error handling
+invoke_wallet() {
+    echo "$@"
+    if ! cli/invoke_wallet1.sh "$@" ; then
+        echo "Error invoking wallet script: $@"
+        exit 1
+    fi
+    sleep 1
+}
+
+# Update voting start time
+invoke_wallet \
+    UpdateVotingStart \
+    $DEFAULT_DERI_AMOUNT \
+    $DEFAULT_TOKEN_AMOUNT \
+    $DEFAULT_RINGSIZE \
+    $VOTE_START
+
+# Update voting end time
+invoke_wallet \
+    UpdateVotingEnd \
+    $DEFAULT_DERI_AMOUNT \
+    $DEFAULT_TOKEN_AMOUNT \
+    $DEFAULT_RINGSIZE \
+    $VOTE_END
+
+# Update voting fee
+invoke_wallet \
+    UpdateVotingFee \
+    $DEFAULT_DERI_AMOUNT \
+    $DEFAULT_TOKEN_AMOUNT \
+    $DEFAULT_RINGSIZE \
+    $VOTE_DERI_COST
+
+# Update display voters
+invoke_wallet \
+    UpdateDisplayVoters \
+    $DEFAULT_DERI_AMOUNT \
+    $DEFAULT_TOKEN_AMOUNT \
+    $DEFAULT_RINGSIZE \
+    $DEFAULT_TRUE_AMOUNT 
+
+# Update reject anonymous votes
+invoke_wallet \
+    UpdateRejectAnonymousVote \
+    $DEFAULT_DERI_AMOUNT \
+    $DEFAULT_TOKEN_AMOUNT \
+    $DEFAULT_RINGSIZE \
+    $DEFAULT_FALSE_AMOUNT
+
+Update votes max
+invoke_wallet \
+    UpdateVotesMax \
+    $DEFAULT_DERI_AMOUNT \
+    $DEFAULT_TOKEN_AMOUNT \
+    $DEFAULT_RINGSIZE \
+    $VOTE_TOKEN_MAX
+
+# Add more functions as needed

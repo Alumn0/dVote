@@ -1,2 +1,6 @@
+*.db
+*.bak
+*.log
 /testing/*.dat
+/testnet_simulator/*
 #/testing/tests/*/*/*.json
