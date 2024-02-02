@@ -10,4 +10,4 @@ shift
 shift
 shift
 
-$BASEDIR/controller.sh $FUNCTION 127.0.0.1:30001 $DEROVALUE $TOKENVALUE $SCID "$@"
+$BASEDIR/controller.sh $FUNCTION 127.0.0.1:30000 $DEROVALUE $TOKENVALUE $SCID "$@"
