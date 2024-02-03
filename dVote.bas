@@ -1,16 +1,16 @@
 Function InitializePrivate() Uint64
-1 IF getCreator() != "false" THEN GOTO 4
+1 IF getCreator() != "false" THEN GOTO 99
 // mandatory: creator address for withdraw and update functions
 2 STORE("Creator", ADDRESS_STRING(SIGNER()))
-3 RETURN 0
-4 RETURN 1
+98 RETURN 0
+99 RETURN 1
 End Function
 
 /**********************
 public voting functions
 **********************/
-Function Vote(choice Uint64) Uint64 // 0 = no, 1 = yes, 2 = abstain
-1 IF ASSETVALUE(SCID()) < 1 || DEROVALUE() < (getVotingFee() * ASSETVALUE(SCID())) || isVotingOpen() != 1 || choice < 0 || choice > 2 || (getRejectAnonymousVote() != 0 && isSignerKnown() != 1) THEN GOTO 5
+Function Vote(choice Uint64) Uint64 // 0 = no, 1 = yes, 2 = abstain, 100000 = yes, 200000 = abstain
+1 IF ASSETVALUE(SCID()) < 1 || DEROVALUE() < (getVotingFee() * ASSETVALUE(SCID())) || isVotingOpen() != 1 || choice < 0 || (choice > 2 && choice != 100000 && choice != 200000) || (getRejectAnonymousVote() != 0 && isSignerKnown() != 1) THEN GOTO 5
 2 addVote(choice, ASSETVALUE(SCID()))
 3 addBalance(getVotingFee() * ASSETVALUE(SCID()))
 4 RETURN refund(0, DEROVALUE() - (getVotingFee() * ASSETVALUE(SCID())))
@@ -241,9 +241,9 @@ End Function
 Function getVotesStoreKey(option Uint64) String
 1 IF option != 0 THEN GOTO 3
 2 RETURN "VotesNo"
-3 IF option != 1 THEN GOTO 5
+3 IF option != 1 && option != 100000 THEN GOTO 5
 4 RETURN "VotesYes"
-5 IF option != 2 THEN GOTO 7
+5 IF option != 2 && option != 200000 THEN GOTO 7
 6 RETURN "VotesAbstain"
 7 IF option != 3 THEN GOTO 9
 8 RETURN "VotesInvalid"
