@@ -1,3 +1,22 @@
+/*
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the “Software”), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
 Function InitializePrivate() Uint64
 1 IF getCreator() != "false" THEN GOTO 99
 // mandatory: creator address for withdraw and update functions
@@ -62,6 +81,42 @@ End Function
 /**********************
  public admin functions
 **********************/
+Function UpdateCollection(collection String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setCollection(HEXDECODE(collection))
+3 RETURN 1
+End Function
+
+Function UpdateTags(tags String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setTags(HEXDECODE(tags))
+3 RETURN 1
+End Function
+
+Function UpdateCover(url String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setCover(HEXDECODE(url))
+3 RETURN 1
+End Function
+
+Function UpdateIcon(url String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setIcon(HEXDECODE(url))
+3 RETURN 1
+End Function
+
+Function UpdateType(value String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setType(HEXDECODE(value))
+3 RETURN 1
+End Function
+
+Function UpdateName(name String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setName(HEXDECODE(name))
+3 RETURN 1
+End Function
+
 Function UpdateDescription(description String) Uint64
 1 IF isCreator() != 1 THEN GOTO 3
 2 RETURN setDescription(HEXDECODE(description))
@@ -311,6 +366,42 @@ End Function
 
 Function setDescription(description String) Uint64
 1 IF isModifiable() != 1 THEN GOTO 3
-2 RETURN STORE("Description", description) != 1
+2 RETURN STORE("descrHdr", description) != 1
+3 RETURN 1
+End Function
+
+Function setName(name String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("nameHdr", name) != 1
+3 RETURN 1
+End Function
+
+Function setType(value String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("typeHdr", value) != 1
+3 RETURN 1
+End Function
+
+Function setIcon(url String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("iconURLHdr", url) != 1
+3 RETURN 1
+End Function
+
+Function setCover(url String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("coverURL", url) != 1
+3 RETURN 1
+End Function
+
+Function setTags(tags String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("tagsHdr", tags) != 1
+3 RETURN 1
+End Function
+
+Function setCollection(collection String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("collection", collection) != 1
 3 RETURN 1
 End Function

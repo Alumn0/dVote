@@ -1,0 +1,14 @@
+{
+    "changed": {
+        "before": {
+            "collection": "636f6c6c656374696f6e2031323334353637383930",
+            "collection_human": "collection 1234567890"
+        },
+        "after": {
+            "collection": "636f6c6c656374696f6e2030393837363534333231",
+            "collection_human": "collection 0987654321"
+        }
+    },
+    "timestamp": 1707008903,
+    "timestamp_human": "2024-02-04 01:08:23"
+}

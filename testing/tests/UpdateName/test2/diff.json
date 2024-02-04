@@ -1,0 +1,14 @@
+{
+    "changed": {
+        "before": {
+            "nameHdr": "706f6c6c2031323334353637383930",
+            "nameHdr_human": "poll 1234567890"
+        },
+        "after": {
+            "nameHdr": "706f6c6c2030393837363534333231",
+            "nameHdr_human": "poll 0987654321"
+        }
+    },
+    "timestamp": 1707004013,
+    "timestamp_human": "2024-02-03 23:46:53"
+}
