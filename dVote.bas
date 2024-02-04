@@ -62,6 +62,42 @@ End Function
 /**********************
  public admin functions
 **********************/
+Function UpdateCollection(collection String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setCollection(HEXDECODE(collection))
+3 RETURN 1
+End Function
+
+Function UpdateTags(tags String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setTags(HEXDECODE(tags))
+3 RETURN 1
+End Function
+
+Function UpdateCover(url String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setCover(HEXDECODE(url))
+3 RETURN 1
+End Function
+
+Function UpdateIcon(url String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setIcon(HEXDECODE(url))
+3 RETURN 1
+End Function
+
+Function UpdateType(value String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setType(HEXDECODE(value))
+3 RETURN 1
+End Function
+
+Function UpdateName(name String) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setName(HEXDECODE(name))
+3 RETURN 1
+End Function
+
 Function UpdateDescription(description String) Uint64
 1 IF isCreator() != 1 THEN GOTO 3
 2 RETURN setDescription(HEXDECODE(description))
@@ -311,6 +347,48 @@ End Function
 
 Function setDescription(description String) Uint64
 1 IF isModifiable() != 1 THEN GOTO 3
-2 RETURN STORE("Description", description) != 1
+2 RETURN STORE("descrHdr", description) != 1
 3 RETURN 1
 End Function
+
+Function setName(name String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("nameHdr", name) != 1
+3 RETURN 1
+End Function
+
+Function setType(value String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("typeHdr", value) != 1
+3 RETURN 1
+End Function
+
+Function setIcon(url String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("iconURLHdr", url) != 1
+3 RETURN 1
+End Function
+
+Function setCover(url String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("coverURL", url) != 1
+3 RETURN 1
+End Function
+
+Function setTags(tags String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("tagsHdr", tags) != 1
+3 RETURN 1
+End Function
+
+Function setCollection(collection String) Uint64
+1 IF isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("collection", collection) != 1
+3 RETURN 1
+End Function
+
+
+
+
+
+

@@ -1,0 +1,14 @@
+{
+    "changed": {
+        "before": {
+            "tagsHdr": "546167312c546167322c54616733",
+            "tagsHdr_human": "Tag1,Tag2,Tag3"
+        },
+        "after": {
+            "tagsHdr": "546167342c546167352c54616736",
+            "tagsHdr_human": "Tag4,Tag5,Tag6"
+        }
+    },
+    "timestamp": 1707008058,
+    "timestamp_human": "2024-02-04 00:54:18"
+}
