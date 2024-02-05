@@ -13,7 +13,8 @@ VOTE_END=$(($(date +%s) + 360))
 VOTE_TOKEN_ONE=1
 VOTE_NO=0 
 VOTE_YES=1
-VOTE_ABSTAIN=2 # VOTING NOT TO VOTE 
+VOTE_ABSTAIN=2 # VOTING NOT TO VOTE
+PARTICIPATION_MAX_TOKEN=2 # Maximum amount of tokens allowed per participation (transaction)
 
 # Function to invoke the wallet script with error handling
 invoke_wallet() {
@@ -66,20 +67,25 @@ invoke_wallet \
     $DEFAULT_FALSE_AMOUNT
 
 # Update allow multiple participation
-invoke_wallet \
-    UpdateAllowMultipleParticipation \
-    $DEFAULT_DERI_AMOUNT \
-    $DEFAULT_TOKEN_AMOUNT \
-    $DEFAULT_RINGSIZE \
-    $DEFAULT_TRUE_AMOUNT
+#invoke_wallet \
+#    UpdateAllowMultipleParticipation \
+#    $DEFAULT_DERI_AMOUNT \
+#    $DEFAULT_TOKEN_AMOUNT \
+#    $DEFAULT_RINGSIZE \
+#    $DEFAULT_TRUE_AMOUNT
 
+# Update maximum amount of tokens allowed per participation
+#invoke_wallet \
+#    UpdateParticipationMaxToken \
+#    $DEFAULT_DERI_AMOUNT \
+#    $DEFAULT_TOKEN_AMOUNT \
+#    $DEFAULT_RINGSIZE \
+#    $PARTICIPATION_MAX_TOKEN
 
-# Set max votes and mint tokens
+# Set max votes, mint tokens and lock contract
 invoke_wallet \
     UpdateVotesMax \
     $DEFAULT_DERI_AMOUNT \
     $DEFAULT_TOKEN_AMOUNT \
     $DEFAULT_RINGSIZE \
     $VOTE_TOKEN_MAX
-
-# Add more functions as needed
