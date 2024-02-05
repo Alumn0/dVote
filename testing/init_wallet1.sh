@@ -65,7 +65,16 @@ invoke_wallet \
     $DEFAULT_RINGSIZE \
     $DEFAULT_FALSE_AMOUNT
 
-Update votes max
+# Update allow multiple participation
+invoke_wallet \
+    UpdateAllowMultipleParticipation \
+    $DEFAULT_DERI_AMOUNT \
+    $DEFAULT_TOKEN_AMOUNT \
+    $DEFAULT_RINGSIZE \
+    $DEFAULT_TRUE_AMOUNT
+
+
+# Set max votes and mint tokens
 invoke_wallet \
     UpdateVotesMax \
     $DEFAULT_DERI_AMOUNT \

@@ -29,7 +29,7 @@ End Function
 public voting functions
 **********************/
 Function Vote(choice Uint64) Uint64 // 0 = no, 1 = yes, 2 = abstain, 100000 = yes, 200000 = abstain
-1 IF ASSETVALUE(SCID()) < 1 || DEROVALUE() < (getVotingFee() * ASSETVALUE(SCID())) || isVotingOpen() != 1 || choice < 0 || (choice > 2 && choice != 100000 && choice != 200000) || (getRejectAnonymousVote() != 0 && isSignerKnown() != 1) THEN GOTO 5
+1 IF ASSETVALUE(SCID()) < 1 || DEROVALUE() < (getVotingFee() * ASSETVALUE(SCID())) || isVotingOpen() != 1 || choice < 0 || (choice > 2 && choice != 100000 && choice != 200000) || (getRejectAnonymousVote() != 0 && isSignerKnown() != 1) || (getAllowMultipleParticipation() != 1 && hasParticipated(ADDRESS_STRING(SIGNER())) != 0) THEN GOTO 5
 2 addVote(choice, ASSETVALUE(SCID()))
 3 addBalance(getVotingFee() * ASSETVALUE(SCID()))
 4 RETURN refund(0, DEROVALUE() - (getVotingFee() * ASSETVALUE(SCID())))
@@ -165,6 +165,12 @@ Function UpdateRejectAnonymousVote(reject Uint64) Uint64
 3 RETURN 1
 End Function
 
+Function UpdateAllowMultipleParticipation(allow Uint64) Uint64
+1 IF isCreator() != 1 THEN GOTO 3
+2 RETURN setAllowMultipleParticipation(allow)
+3 RETURN 1
+End Function
+
 Function Withdraw(qtyDeri Uint64) Uint64
 1 IF isCreator() != 1 THEN GOTO 7
 2 IF qtyDeri > getBalance() THEN GOTO 5 // allow to override the balance
@@ -226,8 +232,22 @@ Function addVote(choice Uint64, qty Uint64) // 0 = no, 1 = yes, 2 = abstain, 3 =
 2 STORE(getVotesStoreKey(4), getVotes(4) + qty) // increase total vote count
 3 IF getDisplayVoters() != 1 || isSignerKnown() != 1 THEN GOTO 5
 4 STORE(getVotesStoreKey(choice) + "," + BLOCK_HEIGHT() + "," + BLOCK_TIMESTAMP(), ADDRESS_STRING(SIGNER()) + "," + qty)
-5 TallyVotes()
-6 RETURN
+5 IF isSignerKnown() != 1 THEN GOTO 7
+6 addParticipated(ADDRESS_STRING(SIGNER()))
+7 TallyVotes()
+8 RETURN
+End Function
+
+Function hasParticipated(address String) Uint64
+1 RETURN EXISTS("~,data,participants," + address)
+End Function
+
+Function addParticipated(address String) Uint64
+1 IF address == "" THEN GOTO 5
+2 IF hasParticipated(address) THEN GOTO 4
+3 RETURN STORE("~,data,participants," + address, 1) != 1
+4 RETURN STORE("~,data,participants," + address, LOAD("~,data,participants," + address) + 1) != 1
+5 RETURN 1
 End Function
 
 /***********************
@@ -317,6 +337,12 @@ Function getVotesMinStoreKey(option Uint64) String
 7 RETURN ""
 End Function
 
+Function getAllowMultipleParticipation() Uint64
+1 IF EXISTS("AllowMultipleParticipation") != 1 THEN GOTO 3
+2 RETURN LOAD("AllowMultipleParticipation")
+3 RETURN 0
+End Function
+
 
 /***********************
 private setter functions
@@ -403,5 +429,11 @@ End Function
 Function setCollection(collection String) Uint64
 1 IF isModifiable() != 1 THEN GOTO 3
 2 RETURN STORE("collection", collection) != 1
+3 RETURN 1
+End Function
+
+Function setAllowMultipleParticipation(allow Uint64) Uint64
+1 IF (allow != 0 && allow != 1) || isModifiable() != 1 THEN GOTO 3
+2 RETURN STORE("AllowMultipleParticipation", allow) != 1
 3 RETURN 1
 End Function
