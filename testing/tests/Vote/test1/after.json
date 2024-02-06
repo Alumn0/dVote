@@ -3,13 +3,15 @@
   "id": "1",
   "result": {
     "stringkeys": {
-      "Creator": "6465726f317179767965797a72636d32667a66366b79713765676b6573327566676e7935786e3737793674797068667839733777336d76796435717137326c766a77",
-      "DisplayVoters": 1,
-      "RejectAnonymousVote": 0,
-      "VotesMax": 500,
-      "VotingEnd": 1706987384,
-      "VotingFee": 100,
-      "VotingStart": 1706987353
+      "SETTINGS,AllowMultipleParticipation": 1,
+      "SETTINGS,Creator": "6465726f317179767965797a72636d32667a66366b79713765676b6573327566676e7935786e3737793674797068667839733777336d76796435717137326c766a77",
+      "SETTINGS,DisplayVoters": 1,
+      "SETTINGS,ParticipationMaxToken": 100,
+      "SETTINGS,RejectAnonymousVote": 0,
+      "SETTINGS,VotesMax": 500,
+      "SETTINGS,VotingEnd": 1707190225,
+      "SETTINGS,VotingFee": 100,
+      "SETTINGS,VotingStart": 1707190193
     },
     "balances": {
       "0000000000000000000000000000000000000000000000000000000000000000": 0

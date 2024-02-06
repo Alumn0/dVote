@@ -1,25 +1,27 @@
 {
     "added": {
-        "Balance": 2000,
+        "Balance": 3000,
+        "COUNT,VotesAbstain": 10,
+        "COUNT,VotesNo": 10,
+        "COUNT,VotesTotal": 30,
+        "COUNT,VotesYes": 10,
         "Conclusion": 0,
-        "VotesAbstain": 10,
-        "VotesAbstain,272,1705737439": "6465726f3171797265377464367839723838793463617664677076366b376c7678366a33396c6673783432306870766833796470637274787278716761346d7035322c3130",
-        "VotesAbstain,272,1705737439_human": "dero1qyre7td6x9r88y4cavdgpv6k7lvx6j39lfsx420hpvh3ydpcrtxrxqga4mp52,10",
-        "VotesMax": 500,
-        "VotesNo": 10,
-        "VotesNo,273,1705737441": "6465726f3171797265377464367839723838793463617664677076366b376c7678366a33396c6673783432306870766833796470637274787278716761346d7035322c3130",
-        "VotesNo,273,1705737441_human": "dero1qyre7td6x9r88y4cavdgpv6k7lvx6j39lfsx420hpvh3ydpcrtxrxqga4mp52,10",
-        "VotesTotal": 20,
-        "VotesTotal_human": " "
+        "~DATA,VotesAbstain,365,1707189794": "6465726f317179767965797a72636d32667a66366b79713765676b6573327566676e7935786e3737793674797068667839733777336d76796435717137326c766a772c3130",
+        "~DATA,VotesAbstain,365,1707189794_human": "dero1qyvyeyzrcm2fzf6kyq7egkes2ufgny5xn77y6typhfx9s7w3mvyd5qq72lvjw,10",
+        "~DATA,VotesNo,366,1707189795": "6465726f317179767965797a72636d32667a66366b79713765676b6573327566676e7935786e3737793674797068667839733777336d76796435717137326c766a772c3130",
+        "~DATA,VotesNo,366,1707189795_human": "dero1qyvyeyzrcm2fzf6kyq7egkes2ufgny5xn77y6typhfx9s7w3mvyd5qq72lvjw,10",
+        "~DATA,VotesYes,364,1707189792": "6465726f317179767965797a72636d32667a66366b79713765676b6573327566676e7935786e3737793674797068667839733777336d76796435717137326c766a772c3130",
+        "~DATA,VotesYes,364,1707189792_human": "dero1qyvyeyzrcm2fzf6kyq7egkes2ufgny5xn77y6typhfx9s7w3mvyd5qq72lvjw,10",
+        "~DATA,participant,dero1qyvyeyzrcm2fzf6kyq7egkes2ufgny5xn77y6typhfx9s7w3mvyd5qq72lvjw": 3
     },
     "changed": {
         "before": {
             "balance": 0
         },
         "after": {
-            "balance": 2000
+            "balance": 3000
         }
     },
-    "timestamp": 1705737441,
-    "timestamp_human": "2024-01-20 07:57:21"
+    "timestamp": 1707189796,
+    "timestamp_human": "2024-02-06 03:23:16"
 }

@@ -2,21 +2,17 @@
     "changed": {
         "before": {
             "Balance": 900,
-            "VotesAbstain": 2,
-            "VotesNo": 1,
-            "VotesTotal": 9,
-            "VotesYes": 6,
+            "COUNT,VotesAbstain": 2,
+            "COUNT,VotesTotal": 9,
             "balance": 900
         },
         "after": {
-            "Balance": 1623,
-            "VotesAbstain": 3,
-            "VotesNo": 2,
-            "VotesTotal": 16,
-            "VotesYes": 11,
-            "balance": 1623
+            "Balance": 1000,
+            "COUNT,VotesAbstain": 3,
+            "COUNT,VotesTotal": 10,
+            "balance": 1000
         }
     },
-    "timestamp": 1706987378,
-    "timestamp_human": "2024-02-03 19:09:38"
+    "timestamp": 1707190219,
+    "timestamp_human": "2024-02-06 03:30:19"
 }

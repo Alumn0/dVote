@@ -2,11 +2,11 @@ Description: Cast votes
 
 Affects stores:
 Balance
-VotesNo
-VotesYes
-VotesAbstain
-VotesInvalid
-VotesTotal
-VotesNo,<block_height>,<timestamp>
-VotesYes,<block_height>,<timestamp>
-VotesTotal,<block_height>,<timestamp>
+COUNT,VotesNo
+COUNT,VotesYes
+COUNT,VotesAbstain
+COUNT,VotesInvalid
+COUNT,VotesTotal
+~DATA,VotesNo,<block_height>,<timestamp>
+~DATA,VotesYes,<block_height>,<timestamp>
+~DATA,VotesTotal,<block_height>,<timestamp>

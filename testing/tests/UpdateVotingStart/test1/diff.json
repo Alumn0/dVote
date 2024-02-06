@@ -1,9 +1,9 @@
 {
     "added": {
-        "VotingStart": 1705721082,
-        "VotingStart_human": "2024-01-20 03:24:42",
-        "VotingStart_offset": 3598
+        "SETTINGS,VotingStart": 1707191470,
+        "SETTINGS,VotingStart_human": "2024-02-06 03:51:10",
+        "SETTINGS,VotingStart_offset": 3599
     },
-    "timestamp": 1705717484,
-    "timestamp_human": "2024-01-20 02:24:44"
+    "timestamp": 1707187871,
+    "timestamp_human": "2024-02-06 02:51:11"
 }

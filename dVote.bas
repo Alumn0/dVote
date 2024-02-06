@@ -1,26 +1,17 @@
 /*
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the “Software”), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
+   dVote - Decentralized Voting
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+   Copyright (c) 2024 Alumn0
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+   Dero Address: Alumn0
+   Website: https://github.com/Alumn0
+   MIT License: https://raw.githubusercontent.com/Alumn0/dVote/dev/license.txt
 */
 
 Function InitializePrivate() Uint64
 1 IF getCreator() != "false" THEN GOTO 99
 // mandatory: creator address for withdraw and update functions
-2 STORE("Creator", ADDRESS_STRING(SIGNER()))
+2 STORE(getStorePrefix("config") + ",Creator", ADDRESS_STRING(SIGNER()))
 98 RETURN 0
 99 RETURN 1
 End Function
@@ -34,6 +25,7 @@ Function Vote(choice Uint64) Uint64 // 0 = no, 1 = yes, 2 = abstain, 100000 = ye
 3 addBalance(getVotingFee() * ASSETVALUE(SCID()))
 4 RETURN refund(0, DEROVALUE() - (getVotingFee() * ASSETVALUE(SCID())))
 5 RETURN refund(ASSETVALUE(SCID()), DEROVALUE())
+6 RETURN 0
 End Function
 
 
@@ -234,10 +226,10 @@ Function addBalance(qty Uint64) Uint64
 End Function
 
 Function addVote(choice Uint64, qty Uint64) // 0 = no, 1 = yes, 2 = abstain, 3 = invalid
-1 STORE(getVotesStoreKey(choice), getVotes(choice) + qty)
-2 STORE(getVotesStoreKey(4), getVotes(4) + qty) // increase total vote count
+1 STORE(getStorePrefix("count") +  "," + getVotesStoreKey(choice), getVotes(choice) + qty)
+2 STORE(getStorePrefix("count") +  "," + getVotesStoreKey(4), getVotes(4) + qty) // increase total vote count
 3 IF getDisplayVoters() != 1 || isSignerKnown() != 1 THEN GOTO 5
-4 STORE(getVotesStoreKey(choice) + "," + BLOCK_HEIGHT() + "," + BLOCK_TIMESTAMP(), ADDRESS_STRING(SIGNER()) + "," + qty)
+4 STORE(getStorePrefix("data") +  "," + getVotesStoreKey(choice) + "," + BLOCK_HEIGHT() + "," + BLOCK_TIMESTAMP(), ADDRESS_STRING(SIGNER()) + "," + qty)
 5 IF isSignerKnown() != 1 THEN GOTO 7
 6 addParticipated(ADDRESS_STRING(SIGNER()))
 7 TallyVotes()
@@ -245,14 +237,14 @@ Function addVote(choice Uint64, qty Uint64) // 0 = no, 1 = yes, 2 = abstain, 3 =
 End Function
 
 Function hasParticipated(address String) Uint64
-1 RETURN EXISTS("~,data,participant," + address)
+1 RETURN EXISTS(getStorePrefix("data") + ",participant," + address)
 End Function
 
 Function addParticipated(address String) Uint64
 1 IF address == "" THEN GOTO 5
 2 IF hasParticipated(address) THEN GOTO 4
-3 RETURN STORE("~,data,participant," + address, 1) != 1
-4 RETURN STORE("~,data,participant," + address, LOAD("~,data,participant," + address) + 1) != 1
+3 RETURN STORE(getStorePrefix("data") + ",participant," + address, 1) != 1
+4 RETURN STORE(getStorePrefix("data") + ",participant," + address, LOAD(getStorePrefix("data") + ",participant," + address) + 1) != 1
 5 RETURN 1
 End Function
 
@@ -260,50 +252,50 @@ End Function
 private getter functions
 ***********************/
 Function getVotesMax() Uint64
-1 IF EXISTS("VotesMax") != 1 THEN GOTO 3
-2 RETURN LOAD("VotesMax")
+1 IF EXISTS(getStorePrefix("config") + ",VotesMax") != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("config") + ",VotesMax")
 3 RETURN 0
 End Function
 
 Function getVotingStart() Uint64
-1 IF EXISTS("VotingStart") != 1 THEN GOTO 3
-2 RETURN LOAD("VotingStart")
+1 IF EXISTS(getStorePrefix("config") + ",VotingStart") != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("config") + ",VotingStart")
 3 RETURN 0
 End Function
 
 Function getVotingEnd() Uint64
-1 IF EXISTS("VotingEnd") != 1 THEN GOTO 3
-2 RETURN LOAD("VotingEnd")
+1 IF EXISTS(getStorePrefix("config") + ",VotingEnd") != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("config") + ",VotingEnd")
 3 RETURN 0
 End Function
 
 Function getVotesMin(option Uint64) Uint64 // 0 = no, 1 = yes, 2 = total
-1 IF EXISTS(getVotesMinStoreKey(option)) != 1 THEN GOTO 3
-2 RETURN LOAD(getVotesMinStoreKey(option))
+1 IF EXISTS(getStorePrefix("config") + "," + getVotesMinStoreKey(option)) != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("config") + "," + getVotesMinStoreKey(option))
 3 RETURN 0
 End Function
 
 Function getVotingFee() Uint64
-1 IF EXISTS("VotingFee") != 1 THEN GOTO 3
-2 RETURN LOAD("VotingFee")
+1 IF EXISTS(getStorePrefix("config") + ",VotingFee") != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("config") + ",VotingFee")
 3 RETURN 0
 End Function
 
 Function getCreator() String
-1 IF EXISTS("Creator") != 1 THEN GOTO 3
-2 RETURN LOAD("Creator")
+1 IF EXISTS(getStorePrefix("config") + ",Creator") != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("config") + ",Creator")
 3 RETURN "false"
 End Function
 
 Function getDisplayVoters() Uint64
-1 IF EXISTS("DisplayVoters") != 1 THEN GOTO 3
-2 RETURN LOAD("DisplayVoters")
+1 IF EXISTS(getStorePrefix("config") + ",DisplayVoters") != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("config") + ",DisplayVoters")
 3 RETURN 0
 End Function
 
 Function getRejectAnonymousVote() Uint64
-1 IF EXISTS("RejectAnonymousVote") != 1 THEN GOTO 3
-2 RETURN LOAD("RejectAnonymousVote")
+1 IF EXISTS(getStorePrefix("config") + ",RejectAnonymousVote") != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("config") + ",RejectAnonymousVote")
 3 RETURN 0
 End Function
 
@@ -314,8 +306,8 @@ Function getBalance() Uint64
 End Function
 
 Function getVotes(option Uint64) Uint64 // 0 = no, 1 = yes, 2 = abstain, 3 = invalid, 4 = total
-1 IF EXISTS(getVotesStoreKey(option)) != 1 THEN GOTO 3
-2 RETURN LOAD(getVotesStoreKey(option))
+1 IF EXISTS(getStorePrefix("count") +  "," + getVotesStoreKey(option)) != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("count") +  "," + getVotesStoreKey(option))
 3 RETURN 0
 End Function
 
@@ -343,15 +335,26 @@ Function getVotesMinStoreKey(option Uint64) String
 7 RETURN ""
 End Function
 
+Function getStorePrefix(option String) String
+1 IF option != "data" THEN GOTO 3
+2 RETURN "~DATA"
+3 IF option != "config" THEN GOTO 5
+4 RETURN "SETTINGS"
+5 IF option != "count" THEN GOTO 7
+6 RETURN "COUNT"
+7 RETURN ""
+End Function
+
+
 Function getAllowMultipleParticipation() Uint64
-1 IF EXISTS("AllowMultipleParticipation") != 1 THEN GOTO 3
-2 RETURN LOAD("AllowMultipleParticipation")
+1 IF EXISTS(getStorePrefix("config") + ",AllowMultipleParticipation") != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("config") + ",AllowMultipleParticipation")
 3 RETURN 0
 End Function
 
 Function getParticipationMaxToken() Uint64
-1 IF EXISTS("ParticipationMaxToken") != 1 THEN GOTO 3
-2 RETURN LOAD("ParticipationMaxToken")
+1 IF EXISTS(getStorePrefix("config") + ",ParticipationMaxToken") != 1 THEN GOTO 3
+2 RETURN LOAD(getStorePrefix("config") + ",ParticipationMaxToken")
 3 RETURN 1
 End Function
 
@@ -360,44 +363,44 @@ private setter functions
 ***********************/
 Function setVotesMax(qty Uint64) Uint64
 1 IF qty < 1 || isModifiable() != 1 THEN GOTO 4
-2 STORE("VotesMax", qty)
+2 STORE(getStorePrefix("config") + ",VotesMax", qty)
 3 RETURN SEND_ASSET_TO_ADDRESS(SIGNER(), qty, SCID()) != qty
 4 RETURN 1
 End Function
 
 Function setVotingStart(timestamp Uint64) Uint64
 1 IF timestamp < BLOCK_TIMESTAMP() || (getVotingEnd() != 0 && timestamp >= getVotingEnd()) || isModifiable() != 1 THEN GOTO 3
-2 RETURN STORE("VotingStart", timestamp) != 1
+2 RETURN STORE(getStorePrefix("config") + ",VotingStart", timestamp) != 1
 3 RETURN 1
 End Function
 
 Function setVotingEnd(timestamp Uint64) Uint64
 1 IF timestamp <= BLOCK_TIMESTAMP() || (getVotingStart() != 0 && timestamp <= getVotingStart()) || isModifiable() != 1 THEN GOTO 3
-2 RETURN STORE("VotingEnd", timestamp) != 1
+2 RETURN STORE(getStorePrefix("config") + ",VotingEnd", timestamp) != 1
 3 RETURN 1
 End Function
 
 Function setVotesMin(qty Uint64, option Uint64) Uint64 // 0 = no, 1 = yes, 2 = total
 1 IF option < 0 || option > 2 || isModifiable() != 1 THEN GOTO 3
-2 RETURN STORE(getVotesMinStoreKey(option), qty) != 1
+2 RETURN STORE(getStorePrefix("config") + "," + getVotesMinStoreKey(option), qty) != 1
 3 RETURN 1
 End Function
 
 Function setVotingFee(qty Uint64) Uint64
 1 IF qty < 0 || isModifiable() != 1 THEN GOTO 3
-2 RETURN STORE("VotingFee", qty) != 1
+2 RETURN STORE(getStorePrefix("config") + ",VotingFee", qty) != 1
 3 RETURN 1
 End Function
 
 Function setDisplayVoters(display Uint64) Uint64
 1 IF (display != 0 && display != 1) || isModifiable() != 1 THEN GOTO 3
-2 RETURN STORE("DisplayVoters", display) != 1
+2 RETURN STORE(getStorePrefix("config") + ",DisplayVoters", display) != 1
 3 RETURN 1
 End Function
 
 Function setRejectAnonymousVote(reject Uint64) Uint64
 1 IF (reject != 0 && reject != 1) || isModifiable() != 1 THEN GOTO 3
-2 RETURN STORE("RejectAnonymousVote", reject) != 1
+2 RETURN STORE(getStorePrefix("config") + ",RejectAnonymousVote", reject) != 1
 3 RETURN 1
 End Function
 
@@ -445,12 +448,12 @@ End Function
 
 Function setAllowMultipleParticipation(allow Uint64) Uint64
 1 IF (allow != 0 && allow != 1) || isModifiable() != 1 THEN GOTO 3
-2 RETURN STORE("AllowMultipleParticipation", allow) != 1
+2 RETURN STORE(getStorePrefix("config") + ",AllowMultipleParticipation", allow) != 1
 3 RETURN 1
 End Function
 
 Function setParticipationMaxToken(qty Uint64) Uint64
 1 IF qty < 1 || isModifiable() != 1 THEN GOTO 3
-2 RETURN STORE("ParticipationMaxToken", qty) != 1
+2 RETURN STORE(getStorePrefix("config") + ",ParticipationMaxToken", qty) != 1
 3 RETURN 1
 End Function

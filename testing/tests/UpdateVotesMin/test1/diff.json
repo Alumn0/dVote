@@ -1,10 +1,10 @@
 {
     "added": {
-        "VotesNoMin": 10,
-        "VotesTotalMin": 30,
-        "VotesYesMin": 20,
-        "VotesYesMin_human": " "
+        "SETTINGS,VotesNoMin": 10,
+        "SETTINGS,VotesTotalMin": 30,
+        "SETTINGS,VotesYesMin": 20,
+        "SETTINGS,VotesYesMin_human": " "
     },
-    "timestamp": 1705714935,
-    "timestamp_human": "2024-01-20 01:42:15"
+    "timestamp": 1707189708,
+    "timestamp_human": "2024-02-06 03:21:48"
 }

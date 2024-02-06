@@ -14,7 +14,7 @@ VOTE_TOKEN_ONE=1
 VOTE_NO=0 
 VOTE_YES=1
 VOTE_ABSTAIN=2 # VOTING NOT TO VOTE
-PARTICIPATION_MAX_TOKEN=2 # Maximum amount of tokens allowed per participation (transaction)
+PARTICIPATION_MAX_TOKEN=5 # Maximum amount of tokens allowed per participation (transaction)
 
 # Function to invoke the wallet script with error handling
 invoke_wallet() {

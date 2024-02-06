@@ -1,16 +1,16 @@
 {
     "changed": {
         "before": {
-            "VotingStart": 1705721082,
-            "VotingStart_human": "2024-01-20 03:24:42",
-            "VotingStart_offset": 3596
+            "SETTINGS,VotingStart": 1707191470,
+            "SETTINGS,VotingStart_human": "2024-02-06 03:51:10",
+            "SETTINGS,VotingStart_offset": 3597
         },
         "after": {
-            "VotingStart": 1705718085,
-            "VotingStart_human": "2024-01-20 02:34:45",
-            "VotingStart_offset": 599
+            "SETTINGS,VotingStart": 1707188472,
+            "SETTINGS,VotingStart_human": "2024-02-06 03:01:12",
+            "SETTINGS,VotingStart_offset": 599
         }
     },
-    "timestamp": 1705717486,
-    "timestamp_human": "2024-01-20 02:24:46"
+    "timestamp": 1707187873,
+    "timestamp_human": "2024-02-06 02:51:13"
 }

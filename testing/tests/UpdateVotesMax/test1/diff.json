@@ -1,8 +1,8 @@
 {
     "added": {
-        "VotesMax": 25,
-        "VotesMax_human": "%"
+        "SETTINGS,VotesMax": 25,
+        "SETTINGS,VotesMax_human": "%"
     },
-    "timestamp": 1705712725,
-    "timestamp_human": "2024-01-20 01:05:25"
+    "timestamp": 1707187213,
+    "timestamp_human": "2024-02-06 02:40:13"
 }

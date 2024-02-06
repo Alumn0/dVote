@@ -1,12 +1,12 @@
 {
     "changed": {
         "before": {
-            "DisplayVoters": 1
+            "SETTINGS,DisplayVoters": 1
         },
         "after": {
-            "DisplayVoters": 0
+            "SETTINGS,DisplayVoters": 0
         }
     },
-    "timestamp": 1705710444,
-    "timestamp_human": "2024-01-20 00:27:24"
+    "timestamp": 1707185718,
+    "timestamp_human": "2024-02-06 02:15:18"
 }

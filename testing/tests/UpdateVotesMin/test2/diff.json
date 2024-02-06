@@ -1,22 +1,22 @@
 {
     "changed": {
         "before": {
-            "VotesNoMin": 10,
-            "VotesNoMin_human": 10,
-            "VotesTotalMin": 30,
-            "VotesTotalMin_human": 30,
-            "VotesYesMin": 20,
-            "VotesYesMin_human": " "
+            "SETTINGS,VotesNoMin": 10,
+            "SETTINGS,VotesNoMin_human": 10,
+            "SETTINGS,VotesTotalMin": 30,
+            "SETTINGS,VotesTotalMin_human": 30,
+            "SETTINGS,VotesYesMin": 20,
+            "SETTINGS,VotesYesMin_human": " "
         },
         "after": {
-            "VotesNoMin": 20,
-            "VotesNoMin_human": " ",
-            "VotesTotalMin": 25,
-            "VotesTotalMin_human": "%",
-            "VotesYesMin": 40,
-            "VotesYesMin_human": "@"
+            "SETTINGS,VotesNoMin": 20,
+            "SETTINGS,VotesNoMin_human": " ",
+            "SETTINGS,VotesTotalMin": 25,
+            "SETTINGS,VotesTotalMin_human": "%",
+            "SETTINGS,VotesYesMin": 40,
+            "SETTINGS,VotesYesMin_human": "@"
         }
     },
-    "timestamp": 1705714939,
-    "timestamp_human": "2024-01-20 01:42:19"
+    "timestamp": 1707189713,
+    "timestamp_human": "2024-02-06 03:21:53"
 }
